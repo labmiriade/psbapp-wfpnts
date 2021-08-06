@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$primary: #374854;
+$dark: #e5e8e9;
+$secondary: #1c262f;
+
+$darkAccent: #5891e4;
+$accent: #8dc7fd;
+$blue: #5891e4;
+
+$colors: (
+  "blue": $darkAccent,
+) !default;

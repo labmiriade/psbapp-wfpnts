@@ -1,0 +1,51 @@
+{
+  "mappings": {
+    "properties": {
+      "placeId": {
+        "type": "text"
+      },
+      "building": {
+        "type": "text"
+      },
+      "operator": {
+        "type": "text"
+      },
+      "address": {
+        "type": "text"
+      },
+      "city": {
+        "type": "text"
+      },
+      "province": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "region": {
+        "type": "text"
+      },
+      "lat": {
+        "type": "text"
+      },
+      "lon": {
+        "type": "text"
+      },
+      "location": {
+        "type": "geo_point"
+      },
+      "accessPoints": {
+        "properties": {
+          "ideCode": { "type": "keyword" },
+          "installationDate": { "type": "text" },
+          "frequencies": { "type": "text" }
+        }
+      },
+      "searchable": {
+        "type": "boolean"
+      }
+    }
+  }
+}
