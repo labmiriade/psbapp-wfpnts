@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as maplibregl from 'maplibre-gl';
 import { Signer } from '@aws-amplify/core';
 import {
@@ -53,12 +46,7 @@ export class AwsMapViewerComponent implements OnInit, OnChanges {
         .pipe(take(1))
         .subscribe((response) => {
           const fn = (url: string, resourceType: string) =>
-            transformRequest(
-              this.environment.awsRegion,
-              url,
-              resourceType,
-              response
-            );
+            transformRequest(this.environment.awsRegion, url, resourceType, response);
           // Initialize the map
           this.map = new maplibregl.Map({
             container: 'map',
@@ -76,16 +64,10 @@ export class AwsMapViewerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.map) {
-      if (
-        changes.center &&
-        changes.center.previousValue !== changes.center.currentValue
-      ) {
+      if (changes.center && changes.center.previousValue !== changes.center.currentValue) {
         this.map.setCenter(this.center);
       }
-      if (
-        changes.pins &&
-        changes.pins.previousValue !== changes.pins.currentValue
-      ) {
+      if (changes.pins && changes.pins.previousValue !== changes.pins.currentValue) {
         this.resetMarkers();
       }
     }
@@ -118,17 +100,12 @@ export class AwsMapViewerComponent implements OnInit, OnChanges {
     if (!this.map) {
       return;
     }
-    const marker = new maplibregl.Marker({ color: '#8dc7fd' })
-      .setLngLat(pin.pos)
-      .addTo(this.map);
+    const marker = new maplibregl.Marker({ color: '#8dc7fd' }).setLngLat(pin.pos).addTo(this.map);
     if (pin.text) {
       let popup = new maplibregl.Popup({ offset: 25 }).setText(pin.text);
       if (pin.href) {
-        let textPopup: string =
-          '<h6><a href="details/' + pin.href + '">' + pin.text + '</a></h6>';
-        textPopup += pin.nPoints
-          ? '<div>' + 'Numero punti wifi: ' + pin.nPoints + '</div>'
-          : '';
+        let textPopup: string = '<h6><a href="details/' + pin.href + '">' + pin.text + '</a></h6>';
+        textPopup += pin.nPoints ? '<div>' + 'Numero punti wifi: ' + pin.nPoints + '</div>' : '';
         popup.setHTML(textPopup);
       }
       marker.setPopup(popup);
@@ -149,12 +126,7 @@ export class AwsMapViewerComponent implements OnInit, OnChanges {
   }
 }
 
-function transformRequest(
-  region: string,
-  url: string,
-  resourceType: string,
-  credentials: Credentials | undefined
-) {
+function transformRequest(region: string, url: string, resourceType: string, credentials: Credentials | undefined) {
   if (resourceType === 'Style' && !url.includes('://')) {
     // resolve to an AWS URL
     url = `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${url}/style-descriptor`;

@@ -18,7 +18,7 @@ export class MainComponent {
     this.sub.add(
       this.store.select(searchKeywords()).subscribe((keys) => {
         //this.q = keys.key;
-      })
+      }),
     );
   }
 

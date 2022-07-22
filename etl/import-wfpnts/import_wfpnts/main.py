@@ -2,14 +2,21 @@ from smart_open import open
 import os
 import boto3
 import csv
+import json
+import itertools
 
 from typing import List, Tuple, Set
 import traceback
 
-CSV_DATA_URL = "https://dati.veneto.it/SpodCkanApi/api/1/rest/dataset/Titolo_Pasubio_Tecnologia_s_r_l_Alto_Vicentino_Elenco_e_ubicazione_di_punti_accesso_wifi_territoriali_collegamento_gratuito_ad_internet_.csv"  # noqa: E501
+CSV_DATA_URLS = json.loads(os.environ.get("CSV_DATA_URLS"))
+
 dynamodb = boto3.resource("dynamodb")
 table_name = os.environ.get("DATA_TABLE")
 table = dynamodb.Table(table_name)
+
+
+def lower_first(iterator):
+    return itertools.chain([next(iterator).lower()], iterator)
 
 
 def lambda_handler(event, context):
@@ -17,9 +24,17 @@ def lambda_handler(event, context):
     ids_from_csv = set()
 
     with table.batch_writer() as batch:
-        with open(CSV_DATA_URL) as csvfile:
-            ids_from_csv, failed_records = put_places(csvfile, batch)
-
+        for CSV_DATA_URL in CSV_DATA_URLS:
+            try:
+                print(f"START: {CSV_DATA_URL}")
+                with open(CSV_DATA_URL) as csvfile:
+                    ids_from_csv, failed_records = put_places(csvfile, batch)
+                    print(f"Found {len(ids_from_csv)} good records")
+                    print(f"Found {len(failed_records)} bad records")
+            except Exception as error:
+                print(f"ERROR: {CSV_DATA_URL}")
+                traceback.print_exc()
+                raise error
     if failed_records:
         raise Exception
 
@@ -66,10 +81,10 @@ def put_places(csvfile, batch) -> Tuple[Set[str], List[Exception]]:
     ids = set()
     errors = []
     items = []
-    reader = csv.DictReader(csvfile, delimiter=";")
+    reader = csv.DictReader(lower_first(csvfile), delimiter=";")
     for row in reader:
         # raggruppo i punti wi-fi con uguali coordinate
-        lat_long = from_coordinates_to_lat_long(row["COORDINATE"])
+        lat_long = from_coordinates_to_lat_long(row["coordinate"])
         place_id = lat_long[0] + "-" + lat_long[1]
         dict_indices = [i for i, d in enumerate(items) if d["pk"] == "p-" + place_id]
         # se il nuovo record ha coordinate già presenti in lista, aggiorno il record aggiungendo un nuovo access point alla lista degli access point
@@ -122,6 +137,7 @@ def put_places(csvfile, batch) -> Tuple[Set[str], List[Exception]]:
 
 
 def get_or_error(item, key):
+    key = key.lower()
     try:
         return item[key]
     except KeyError:

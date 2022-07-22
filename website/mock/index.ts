@@ -25,9 +25,7 @@ for (const [name, module] of Object.entries(modules)) {
   app.use(module.allowedMethods());
 }
 
-app.listen(config.port, () =>
-  console.log(`Server started on port ${config.port}!`)
-);
+app.listen(config.port, () => console.log(`Server started on port ${config.port}!`));
 
 const delay = (timeout: number) =>
   new Promise((resolve) => {

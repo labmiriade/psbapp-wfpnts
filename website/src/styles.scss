@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./customtheme.scss";
+@import './customtheme.scss';
 /* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
-@import "~maplibre-gl/dist/maplibre-gl";
+@import '~bootstrap/scss/bootstrap';
+@import '~maplibre-gl/dist/maplibre-gl';
 
 body,
 html {

@@ -4,18 +4,11 @@ import { PlaceInfo } from 'src/app/core/interfaces/api.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/reducers';
-import {
-  searchKeywords,
-  searchPlace,
-  searchPlaceById,
-} from 'src/app/store/selectors/main.selector';
+import { searchKeywords, searchPlace, searchPlaceById } from 'src/app/store/selectors/main.selector';
 import { Pin } from 'src/app/shared/components/aws-map-viewer/aws-map-viewer.component';
 import { map, take } from 'rxjs/operators';
 import * as maplibregl from 'maplibre-gl';
-import {
-  searchById,
-  searchFailedById,
-} from 'src/app/store/actions/main.actions';
+import { searchById, searchFailedById } from 'src/app/store/actions/main.actions';
 import { Location } from '@angular/common';
 import { Actions, ofType } from '@ngrx/effects';
 import { ToastService, ToastType } from 'src/app/core/services/toast.service';
@@ -37,7 +30,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private toast: ToastService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private store: Store<AppState>
+    private store: Store<AppState>,
   ) {
     this.sub = new Subscription();
     this.placeId = '';
@@ -53,10 +46,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
             if (place === undefined) {
               this.getPlaceById();
             }
-          })
+          }),
         );
         this.mapPin = this.getPin();
-      })
+      }),
     );
   }
 
@@ -68,11 +61,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.action$.pipe(ofType(searchFailedById)).subscribe((props) => {
         if (props.placeId === this.placeId) {
-          this.toast.show(
-            'Errore',
-            'La palestra cercata non esiste',
-            ToastType.Danger
-          );
+          this.toast.show('Errore', 'La palestra cercata non esiste', ToastType.Danger);
 
           this.router.navigate(['/search'], {
             queryParams: {
@@ -82,18 +71,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
             },
           });
         }
-      })
+      }),
     );
   }
 
   get numberPoints(): Observable<number> | undefined {
     return this.place$?.pipe(
       map((place) => {
-        let nPoints: number = place?.accessPoints
-          ? place.accessPoints.length
-          : 0;
+        let nPoints: number = place?.accessPoints ? place.accessPoints.length : 0;
         return nPoints;
-      })
+      }),
     );
   }
 
@@ -106,7 +93,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           ret = place.city + building;
         }
         return ret;
-      })
+      }),
     );
   }
   get address(): Observable<string> | undefined {
@@ -118,7 +105,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           ret = place.address + city;
         }
         return ret;
-      })
+      }),
     );
   }
 
@@ -131,7 +118,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           ret = place.province + region;
         }
         return ret;
-      })
+      }),
     );
   }
 
@@ -143,23 +130,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
     return this.place$?.pipe(
       map((place) => {
         let pins: Pin[] = [];
-        if (
-          place?.lat !== undefined &&
-          place?.lon !== undefined &&
-          place.lat !== '' &&
-          place.lon !== ''
-        ) {
-          const pin: maplibregl.LngLatLike = [
-            parseFloat(place.lon),
-            parseFloat(place.lat),
-          ];
+        if (place?.lat !== undefined && place?.lon !== undefined && place.lat !== '' && place.lon !== '') {
+          const pin: maplibregl.LngLatLike = [parseFloat(place.lon), parseFloat(place.lat)];
           let mapPin: Pin = {
             pos: pin,
           };
           pins.push(mapPin);
         }
         return pins;
-      })
+      }),
     );
   }
 
@@ -176,7 +155,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               geo: keys.geo ? keys.geo : '0',
             },
           });
-        })
+        }),
     );
   }
 }

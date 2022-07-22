@@ -9,11 +9,7 @@ import { ToastService, ToastType } from 'src/app/core/services/toast.service';
   styleUrls: ['./index.component.scss'],
 })
 export class IndexComponent {
-  constructor(
-    private router: Router,
-    private toast: ToastService,
-    private geolocation: GeolocationService
-  ) {}
+  constructor(private router: Router, private toast: ToastService, private geolocation: GeolocationService) {}
 
   onSearchClick(event: { q: string; geo: boolean }) {
     if (event.geo) {
@@ -31,18 +27,18 @@ export class IndexComponent {
             this.toast.show(
               'NO LOCATION, NO PARTY',
               'Non abbiamo il permesso di utilizzare la tua posizione. Abbiamo fatto una ricerca senza posizione.',
-              ToastType.Warning
+              ToastType.Warning,
             );
             this.goToSearch(event.q, false);
           } else {
             this.toast.show(
               'NO LOCATION, NO PARTY',
               'Non possiamo cercare per posizione senza poter accedere alla tua posizione.',
-              ToastType.Danger
+              ToastType.Danger,
             );
           }
           // 1b. if KO && q is empty => do nothing (err msg?)
-        }
+        },
       );
     } else {
       // go to search

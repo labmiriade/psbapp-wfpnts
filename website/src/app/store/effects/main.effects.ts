@@ -20,20 +20,18 @@ export class MainEffects {
       ofType(search),
       mergeMap((props) =>
         this.main.search(props.q, this.positionToString(props.near)).pipe(
-          map((results) =>
-            searchSuccess({ results: results.places as PlaceInfo[] })
-          ),
+          map((results) => searchSuccess({ results: results.places as PlaceInfo[] })),
           catchError((e) => {
             this.toast.show(
               'Errore in ricerca',
               'Non siamo riusciti a portare a termine la ricerca. Si prega di riprovare.',
-              ToastType.Danger
+              ToastType.Danger,
             );
             return of(searchFailed({ error: e }));
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   searchById$ = createEffect(() =>
@@ -44,17 +42,13 @@ export class MainEffects {
           map((result) => searchSuccessById({ result: result })),
           catchError((e) => {
             return of(searchFailedById({ error: e, placeId: props.placeId }));
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
-  constructor(
-    private actions$: Actions,
-    private main: MainService,
-    private toast: ToastService
-  ) {}
+  constructor(private actions$: Actions, private main: MainService, private toast: ToastService) {}
 
   positionToString(pos?: GeolocationPosition): string | undefined {
     if (!pos) {

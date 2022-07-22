@@ -13,9 +13,7 @@ export function PlaceList(): components['schemas']['PlaceList'] {
   };
 }
 
-export function PlaceInfo(
-  placeId?: string
-): components['schemas']['PlaceInfo'] {
+export function PlaceInfo(placeId?: string): components['schemas']['PlaceInfo'] {
   return {
     placeId: placeId ?? faker.random.word(),
     building: faker.random.word(),
@@ -36,9 +34,7 @@ function randomAccessPoint(): components['schemas']['AccessPoint'][] {
   for (let i = 0; i < howMany; i++) {
     items.push({
       ideCode: faker.random.word(),
-      installationDate: faker.datatype
-        .number({ min: 2000, max: 2021 })
-        .toString(),
+      installationDate: faker.datatype.number({ min: 2000, max: 2021 }).toString(),
       frequencies: '2.4 ghz e 5 ghz',
     });
   }

@@ -6,15 +6,7 @@
         <ng-container *ngTemplateOutlet="buttoniera"></ng-container>
       </div>
     </div>
-    <div
-      class="
-        col-12
-        mt-2
-        flex-row
-        justify-content-center
-        search-bar__buttons-inline
-      "
-    >
+    <div class="col-12 mt-2 flex-row justify-content-center search-bar__buttons-inline">
       <ng-container *ngTemplateOutlet="buttoniera"></ng-container>
     </div>
   </div>
@@ -22,13 +14,8 @@
 
 <ng-template #buttoniera>
   <div class="search-bar__button-block">
-    <button
-      type="submit"
-      class="btn btn-primary search-bar__button"
-      (click)="search($event)"
-    >
-      <span *ngIf="allPlace">Tutti i punti</span>
-      <span *ngIf="!allPlace">Ricerca</span>
+    <button type="submit" class="btn btn-primary search-bar__button" (click)="search($event)">
+      <span>Ricerca</span>
     </button>
     <button
       type="button"

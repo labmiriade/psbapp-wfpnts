@@ -5,10 +5,7 @@ import { Store } from '@ngrx/store';
 import { search } from 'src/app/store/actions/main.actions';
 import { AppState } from 'src/app/store/reducers';
 import { PlaceInfo } from 'src/app/core/interfaces/api.interface';
-import {
-  searchResults,
-  searchLoading,
-} from 'src/app/store/selectors/main.selector';
+import { searchResults, searchLoading } from 'src/app/store/selectors/main.selector';
 import * as maplibregl from 'maplibre-gl';
 import { Pin } from 'src/app/shared/components/aws-map-viewer/aws-map-viewer.component';
 import { map } from 'rxjs/operators';
@@ -30,7 +27,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<AppState>,
-    private geolocation: GeolocationService
+    private geolocation: GeolocationService,
   ) {
     this.sub = new Subscription();
     this.q = '';
@@ -52,7 +49,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
           this.store.dispatch(search({ q: this.q }));
         }
-      })
+      }),
     );
   }
 
@@ -79,10 +76,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             placeDati.lat !== '' &&
             placeDati.lon !== ''
           ) {
-            const pin: maplibregl.LngLatLike = [
-              parseFloat(placeDati.lon),
-              parseFloat(placeDati.lat),
-            ];
+            const pin: maplibregl.LngLatLike = [parseFloat(placeDati.lon), parseFloat(placeDati.lat)];
             let mapPin: Pin = {
               pos: pin,
               text: placeDati.building ? placeDati.building : '',
@@ -93,7 +87,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           }
         }
         return pins;
-      })
+      }),
     );
   }
 

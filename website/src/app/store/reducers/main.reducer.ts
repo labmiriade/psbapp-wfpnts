@@ -63,5 +63,5 @@ export const reducer = createReducer(
     loading: false,
     error: props.error,
     result: undefined,
-  }))
+  })),
 );

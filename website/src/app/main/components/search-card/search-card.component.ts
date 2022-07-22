@@ -12,9 +12,7 @@ export class SearchCardComponent {
 
   get name(): string {
     if (this.place?.city) {
-      let building: string = this.place.building
-        ? ' - ' + this.place.building
-        : '';
+      let building: string = this.place.building ? ' - ' + this.place.building : '';
       return this.place.city + building;
     } else {
       return '';

@@ -1,4 +1,4 @@
-@import "src/variables";
+@import 'src/variables';
 @include media-breakpoint-up(md) {
   .details__map {
     height: 14rem;

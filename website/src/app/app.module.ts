@@ -11,10 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { effects } from './store/effects';
 import { reducers } from './store/reducers';
 import { HttpClientModule } from '@angular/common/http';
-import {
-  FaIconLibrary,
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faAngleRight,
   faCheckCircle,
@@ -34,13 +31,7 @@ import { SubToolbarComponent } from './components/sub-toolbar/sub-toolbar.compon
 
 registerLocaleData(localeIt, 'it-IT');
 @NgModule({
-  declarations: [
-    AppComponent,
-    ToastsComponent,
-    TopToolbarComponent,
-    FooterComponent,
-    SubToolbarComponent,
-  ],
+  declarations: [AppComponent, ToastsComponent, TopToolbarComponent, FooterComponent, SubToolbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,14 +52,6 @@ registerLocaleData(localeIt, 'it-IT');
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(
-      faAngleRight,
-      faCheckCircle,
-      faAngleLeft,
-      faTimes,
-      faPhoneAlt,
-      faGlobe,
-      faEnvelope
-    );
+    library.addIcons(faAngleRight, faCheckCircle, faAngleLeft, faTimes, faPhoneAlt, faGlobe, faEnvelope);
   }
 }

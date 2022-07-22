@@ -1,20 +1,10 @@
 <div class="d-flex justify-content-center py-2 mb-3">
   <div class="col-12">
     <div class="d-flex justify-content-center">
-      <button
-        type="button"
-        class="btn btn-dark btn-sm mt-2"
-        (click)="onSearchClick()"
-      >
-        Torna alla ricerca
-      </button>
+      <button type="button" class="btn btn-dark btn-sm mt-2" (click)="onSearchClick()">Torna alla ricerca</button>
     </div>
     <div class="details__map mt-2">
-      <app-aws-map-viewer
-        [pins]="mapPin | async"
-        [zoomToPins]="true"
-        [zoom]="12"
-      ></app-aws-map-viewer>
+      <app-aws-map-viewer [pins]="mapPin | async" [zoomToPins]="true" [zoom]="12"></app-aws-map-viewer>
     </div>
     <div *ngIf="(place$ | async)?.city" class="details__name mt-4 text-center">
       {{ name | async }}
@@ -31,12 +21,8 @@
     </div>
     <div class="mt-2 mb-3 text-center details__info">
       <strong>Informazioni</strong>
-      <div *ngIf="(place$ | async)?.operator">
-        Operatore: {{ (place$ | async)?.operator }}
-      </div>
-      <div *ngIf="(place$ | async)?.building">
-        Edificio: {{ (place$ | async)?.building }}
-      </div>
+      <div *ngIf="(place$ | async)?.operator">Operatore: {{ (place$ | async)?.operator }}</div>
+      <div *ngIf="(place$ | async)?.building">Edificio: {{ (place$ | async)?.building }}</div>
     </div>
   </div>
 </div>

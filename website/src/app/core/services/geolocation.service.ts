@@ -15,7 +15,7 @@ export class GeolocationService {
       navigator.geolocation.getCurrentPosition(
         (result) => resolve(result),
         (error) => reject(error),
-        options ?? { timeout: this.TIMEOUT_MS }
+        options ?? { timeout: this.TIMEOUT_MS },
       );
     });
   }
